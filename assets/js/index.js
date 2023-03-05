@@ -49,66 +49,79 @@ const propiedadesJSON = [
   }
 ];
 
-
+//Selección elementos del DOM
 const card = document.querySelector(".propiedades");
 const total = document.querySelector("#total");
 const button = document.querySelector("#search");
 
-
+//Función que completa los campos de la tarjeta con los valores de las variables
 function cards(cuartos, mdesde, mhasta) {
 
   var html = "";
   let contar = 0;
 
+//Ciclo que recorre las propiedades de los objetos del arreglo
   for (let propiedad of propiedadesJSON) {
 
     if (propiedad.rooms >= cuartos && propiedad.m >= mdesde && propiedad.m <= mhasta) {
 
     html += `<div class="propiedad"> 
-    <div class="img" style="background-image: url('${propiedad.src}')"></div> 
-    <section> 
-      <h5>${propiedad.name}</h5> 
-      <div class="d-flex justify-content-between"> 
-        <p>Cuartos: ${propiedad.rooms}</p> 
-        <p>Metros: ${propiedad.m}</p> 
-      </div> 
-      <p class="my-3">${propiedad.description}</p> 
-      <button class="btn btn-info ">Ver más</button> 
-    </section> 
-  </div>
-    `
-  contar = contar + 1
-    }
 
+              <div class="img" style="background-image: url('${propiedad.src}')"></div> 
+
+              <section> 
+                <h5>${propiedad.name}</h5> 
+
+              <div class="d-flex justify-content-between">
+                <p>Cuartos: ${propiedad.rooms}</p> 
+                <p>Metros: ${propiedad.m}</p> 
+              </div> 
+
+                <p class="my-3">${propiedad.description}</p> 
+
+                <button class="btn btn-info ">Ver más</button> 
+              </section> 
+            </div>`
+    
+      contar = contar + 1
+
+    }
   } 
+  
   card.innerHTML = html
   
   total.innerHTML = contar
 }
 
+//Función que valida los valores ingresados por el usuario
 function validar (){
 var cuartos = document.querySelector("#cuartos").value;
 var mdesde = document.querySelector("#mdesde").value;
 var mhasta = document.querySelector("#mhasta").value;
 
+//Declarar que los valores de las variables son números si o si
 cuartos=Number(cuartos), mdesde=Number(mdesde), mhasta=Number(mhasta);
 
+//Condición: números positivos
 if (cuartos <= 0 || mdesde <= 0 || mhasta <= 0){
   alert ("Los valores deben ser mayor a 1")
 }
 
+//Condición: valor de hasta debe ser mayor que el valor de desde --> Si ésto ocurre se ejecuta la función cards
 else if (mdesde < mhasta ){
  cards(cuartos, mdesde, mhasta)
   }
 
-
+//Alerta si la condición anterior no se cumple
 else {
   alert ("Debes ingresar valores válidos")
 }
 }
 
+//Pantalla inicio
 window.addEventListener("load", cards(1,1,500))
 
+//Evento al clickear el botón
 button.addEventListener("click", validar)
 
 
